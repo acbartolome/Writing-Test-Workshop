@@ -1,4 +1,4 @@
-const { multiplication, concatOdds, shoppingCart } = require("../index");
+const { multiplication, concatOdds, ShoppingCart } = require("../index");
 
 describe("multiplication", () => {
   test("Test if num times num equals product of numbers", () => {
@@ -33,27 +33,17 @@ describe("concatOdds", () => {
   })
 });
 
-describe("shoppingCart", () => {
-  let shoppingCartInstance;
-  beforeEach(() => {
-    shoppingCartInstance = new shoppingCart({
-      cart: {},
-      loggedIn: false,
-    });
-  });
-  // when cart is empty
+describe("ShoppingCart", () => {
+  const shoppingCartInstance = new ShoppingCart(false);
   test("When cart is empty return empty cart message", () => {
-    let result = shoppingCartInstance.checkout();
-    expect(result).toBe("You need to add items to checkout")
+    expect(shoppingCartInstance.checkOut()).toEqual({message: "Do you want to make an account", sum: 0})
   });
-  // can use the ".toBe" set it equal to the return message ie "Do you want to log in or create account?" etc
-  // when user isn't logged in
-  test("When the user isn't logged in", () => {
-    let results = shoppingCartInstance.addProduct({name: "eggs", quantity: 1, price: 3.99})
-    expect(results.checkout()).toBe("Do you want to log in or create account?")
+  test("Add items to cart", () => {
+    shoppingCartInstance.addToCart({name: "eggs", price: 3.99});
+    expect(shoppingCartInstance.cart).toEqual({eggs: {price: 3.99, quantity: 1}})
+  });
+  test("Remove Item from cart ", () => {
+    shoppingCartInstance.addToCart({name: "eggs", price: 3.99});
+    expect(shoppingCartInstance.removeFromCart("eggs")).toBe()
   })
-
-  // when user is logged in
-
-
-});
+  })
