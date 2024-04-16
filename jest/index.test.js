@@ -12,7 +12,8 @@ describe("multiplication", () => {
   });
 
   test("Test if no parameters returns NaN", () => {
-    expect(multiplication()).toBe(NaN)
+    expect(multiplication()).toBe(NaN);
+    expect(multiplication([] ,{})).toBe(NaN);
   })
 });
 
@@ -32,20 +33,27 @@ describe("concatOdds", () => {
   })
 });
 
-// describe("shoppingCart", () => {
-//   beforeEach(() => {
-//     shoppingCart = new shoppingCart({
-//       cart: 0,
-//       loggedIn: false,
-//     });
-//   });
-//   // when cart is empty
-//   test("When cart is empty return empty cart message", () => {
-//     let shoppingCart;
-//     expect(checkout(0)).toBe("You need to add items to checkout")
-//   });
+describe("shoppingCart", () => {
+  let shoppingCartInstance;
+  beforeEach(() => {
+    shoppingCartInstance = new shoppingCart({
+      cart: {},
+      loggedIn: false,
+    });
+  });
+  // when cart is empty
+  test("When cart is empty return empty cart message", () => {
+    let result = shoppingCartInstance.checkout();
+    expect(result).toBe("You need to add items to checkout")
+  });
+  // can use the ".toBe" set it equal to the return message ie "Do you want to log in or create account?" etc
+  // when user isn't logged in
+  test("When the user isn't logged in", () => {
+    let results = shoppingCartInstance.addProduct({name: "eggs", quantity: 1, price: 3.99})
+    expect(results.checkout()).toBe("Do you want to log in or create account?")
+  })
 
-//   // when user isn't logged in
+  // when user is logged in
 
-//   // when user is logged in
-// });
+
+});
